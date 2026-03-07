@@ -4,8 +4,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, Float, ForeignKey
 
 from .base import Base, TimestampMixin
-from .user import Student
-from .group import Group
 
 
 class Payment(Base, TimestampMixin):

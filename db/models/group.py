@@ -1,11 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, ForeignKey
 
-from db.models.payment import Payment
 from .base import Base, TimestampMixin
-from .user import Teacher, Student
-from .course import Course
-from .lesson import Lesson
 
 
 class GroupStatus:

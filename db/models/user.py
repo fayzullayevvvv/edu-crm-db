@@ -2,8 +2,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, ForeignKey
 
 from .base import Base, TimestampMixin
-from .group import Group, Enrollment
-from .payment import Payment
 
 
 class UserRole:
@@ -27,7 +25,7 @@ class User(Base, TimestampMixin):
     )
 
 
-class Student(User):
+class Student(Base):
     __tablename__ = "students"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -45,7 +43,7 @@ class Student(User):
     )
 
 
-class Teacher(User):
+class Teacher(Base):
     __tablename__ = "teachers"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
