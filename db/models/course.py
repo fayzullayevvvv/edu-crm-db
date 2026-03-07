@@ -12,4 +12,4 @@ class Course(Base, TimestampMixin):
     description: Mapped[str] = mapped_column(String(255), nullable=True)
     price: Mapped[float] = mapped_column(Float, nullable=False)
 
-    course: Mapped[list["Group"]] = relationship("Group", back_populates="course")
+    groups: Mapped[list["Group"]] = relationship("Group", back_populates="course")

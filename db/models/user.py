@@ -5,6 +5,7 @@ from .base import Base, TimestampMixin
 
 
 class UserRole:
+    ADMIN = "admin"
     STUDENT = "student"
     TEACHER = "teacher"
 
@@ -54,4 +55,4 @@ class Teacher(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
 
     user: Mapped[User] = relationship("User", back_populates="teacher_profile")
-    course: Mapped[list["Group"]] = relationship("Group", back_populates="teacher")
+    groups: Mapped[list["Group"]] = relationship("Group", back_populates="teacher")
