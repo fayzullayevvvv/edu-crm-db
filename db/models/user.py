@@ -4,7 +4,6 @@ from sqlalchemy import Integer, String, ForeignKey
 from .base import Base, TimestampMixin
 from .group import Group, Enrollment
 from .payment import Payment
-from .lesson import Lesson
 
 
 class UserRole:
@@ -36,9 +35,7 @@ class Student(User):
     last_name: Mapped[str] = mapped_column(String(255), nullable=False)
     phone: Mapped[str] = mapped_column(String(20), nullable=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    payments: Mapped[list["Payment"]] = relationship(
-        "Payment", back_populates="student"
-    )
+
     user: Mapped[User] = relationship("User", back_populates="student_profile")
     enrollments: Mapped["Enrollment"] = relationship(
         "Enrollment", back_populates="student"
@@ -60,4 +57,3 @@ class Teacher(User):
 
     user: Mapped[User] = relationship("User", back_populates="teacher_profile")
     course: Mapped[list["Group"]] = relationship("Group", back_populates="teacher")
-    lessons: Mapped[list["Lesson"]] = relationship("Lesson", back_populates="teacher")

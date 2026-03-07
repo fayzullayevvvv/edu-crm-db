@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Integer, String, ForeignKey, Float
+from sqlalchemy import Integer, String, Float
 
 from .base import Base, TimestampMixin
 from .group import Group
