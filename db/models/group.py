@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy import Integer, String, ForeignKey, Enum
 
 from .base import Base, TimestampMixin
 
@@ -24,7 +24,17 @@ class Group(Base, TimestampMixin):
         Integer, ForeignKey("teachers.id"), nullable=False
     )
     capacity: Mapped[int] = mapped_column(Integer, default=0)
-    status: Mapped[str] = mapped_column(String(30))
+    status: Mapped[str] = mapped_column(
+        Enum(
+            GroupStatus.PANDING,
+            GroupStatus.ACTIVE,
+            GroupStatus.CLOSED,
+            GroupStatus.GRADUATED,
+            name="group_status",
+        ),
+        default=GroupStatus.PANDING,
+        nullable=False,
+    )
 
     course: Mapped["Course"] = relationship("Course", back_populates="groups")
     teacher: Mapped["Teacher"] = relationship("Teacher", back_populates="groups")

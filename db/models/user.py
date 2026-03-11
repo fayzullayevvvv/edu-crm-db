@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Integer, String, ForeignKey
+from sqlalchemy import Integer, String, ForeignKey, Enum
 
 from .base import Base, TimestampMixin
 
@@ -16,7 +16,15 @@ class User(Base, TimestampMixin):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     username: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
-    role: Mapped[str] = mapped_column(String(50), nullable=False)
+    role: Mapped[str] = mapped_column(
+        Enum(
+            UserRole.ADMIN,
+            UserRole.STUDENT,
+            UserRole.TEACHER,
+            name="user_role",
+        ),
+        nullable=False,
+    )
 
     student_profile: Mapped["Student"] = relationship(
         "Student", uselist=False, back_populates="user"
