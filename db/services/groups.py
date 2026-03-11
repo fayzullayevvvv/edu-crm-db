@@ -1,4 +1,3 @@
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from ..models import Group, Course, GroupStatus, Student, Enrollment
@@ -8,8 +7,8 @@ class GroupService:
     def __init__(self, session: Session):
         self.session = session
 
-    def create_group(self, course: Course, capacity: int) -> Group:
-        group = Group(course_id=course.id, capacity=capacity, status=GroupStatus.ACTIVE)
+    def create_group(self, name: str, course: Course, capacity: int) -> Group:
+        group = Group(name=name, course_id=course.id, capacity=capacity, status=GroupStatus.ACTIVE)
         self.session.add(group)
         self.session.commit()
         self.session.refresh(group)
@@ -22,7 +21,7 @@ class GroupService:
 
         if len(group.enrollments) >= group.capacity:
             raise ValueError("Group is full. Cannot enroll more students.")
-        
+
         enrollment = Enrollment(student_id=student.id, group_id=group.id)
         self.session.add(enrollment)
         self.session.commit()
@@ -37,7 +36,7 @@ class GroupService:
         )
         if not enrollment:
             raise ValueError("Student not enrolled in this group.")
-        
+
         self.session.delete(enrollment)
         self.session.commit()
         print("student deleted successfully.")

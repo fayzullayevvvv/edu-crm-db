@@ -12,12 +12,8 @@ class CourseService:
         existing_course = self.get_course_by_name(name)
         if existing_course:
             raise ValueError("course already exists.")
-        
-        course = Course(
-            name=name,
-            description=description,
-            price=price
-        )
+
+        course = Course(name=name, description=description, price=price)
         self.session.add(course)
         self.session.commit()
         return course
@@ -26,7 +22,7 @@ class CourseService:
         existing_course = self.get_course_by_id(id)
         if existing_course and existing_course.id != course.id:
             raise ValueError("course already exists.")
-        
+
         course.name = name
         course.description = description
         course.price = price
@@ -48,7 +44,7 @@ class CourseService:
     def get_course_by_name(self, name: str) -> Course | None:
         stmt = select(Course).where(Course.name == name)
         return self.session.execute(stmt).scalar_one_or_none()
-    
+
     def get_course_by_id(self, id: int) -> Course | None:
         stmt = select(Course).where(Course.id == id)
         return self.session.execute(stmt).scalar_one_or_none()
